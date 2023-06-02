@@ -45,7 +45,7 @@ RarHunt was developed by Julian Baquero.
 Contributions to RarHunt are welcome! If you find any bugs, have feature requests, or would like to contribute enhancements, please submit an issue or a pull request.
 
 # Feedback
-We appreciate your feedback! If you have any questions, suggestions, or comments, please feel free to [contact us/email us/etc.].
+We appreciate your feedback! If you have any questions, suggestions, or comments, please feel free to contact me.
 
 # Acknowledgments
 I would like to thank the developers of the WAMP server, RARBG.to, qBitTorrent, and all the libraries used in this project for their contributions.
