@@ -21,6 +21,9 @@ The results will be displayed in the table.
 Double-click on a torrent's hash to launch the qBitTorrent client.
 Choose the download location for the selected torrent.
 Start the download in the qBitTorrent client.
+
+![image](https://github.com/FrodoSynthesis05/RarHunt/assets/72288240/fcf49b8a-f8ed-4412-ade2-2a92b56fafcf)
+
 # Getting Started
 To get started with RarHunt, follow these steps:
 
