@@ -1,5 +1,5 @@
 # RarHunt
-RarHunt is a Java application that allows you to browse the RARBG.to database of torrents. It utilizes the WAMP server to connect to the rarbg_db.sqlite database, providing an easy way to search and explore available torrents. The program also includes a category filter, allowing you to narrow down your search results.
+RarHunt is a Java application that allows you to browse the RARBG.to database of torrents. It reads the rarbg_db.sqlite database, providing an easy way to search and explore available torrents. The program also includes a category filter, allowing you to narrow down your search results.
 
 # Features
 Browse the RARBG.to database of torrents.
@@ -9,9 +9,8 @@ Prompt to choose the download location for the selected torrent.
 # Prerequisites
 Before using RarHunt, make sure you have the following:
 
-WAMP server installed and running.
 rarbg_db.sqlite database file available.
-Java JDK installed.
+Java JDK 20 installed.
 # Usage
 Launch the RarHunt application.
 Enter the desired search query in the search field.
@@ -34,8 +33,7 @@ Build and run the application.
 Troubleshooting
 If you encounter any issues while using RarHunt, consider the following:
 
-Ensure that the WAMP server is running and properly configured.
-Check the connection settings to the rarbg_db.sqlite database.
+Ensure rarbg_db.sqlite is in the same directory as the application.
 Verify that the Java JDK is installed correctly.
 Make sure the required libraries are included and up to date.
 # License
@@ -51,6 +49,6 @@ Contributions to RarHunt are welcome! If you find any bugs, have feature request
 We appreciate your feedback! If you have any questions, suggestions, or comments, please feel free to contact me.
 
 # Acknowledgments
-I would like to thank the developers of the WAMP server, RARBG.to, qBitTorrent, and all the libraries used in this project for their contributions.
+I would like to thank the developers of the RARBG.to, qBitTorrent, and all the libraries used in this project for their contributions.
 
 Enjoy browsing and downloading torrents with RarHunt!
