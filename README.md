@@ -4,7 +4,7 @@ RarHunt is a Java application that allows you to browse the RARBG.to database of
 # Features
 - Browse the RARBG.to database of torrents.
 - Filter torrents by category to find specific content.
-- Search torrents by IMDB tag.
+- Search torrents by IMDB tag or title.
 - Double-click on a torrent's hash to automatically launch the qBitTorrent client.
 - Prompt to choose the download location for the selected torrent.
 # Prerequisites

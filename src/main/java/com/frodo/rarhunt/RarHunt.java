@@ -68,7 +68,7 @@ public RarHunt() {
     // Create a table model with labeled columns
     tableModel = new DefaultTableModel(
             new Object[][]{},
-            new String[]{"ID", "Hash", "Title", "DT", "Category", "Size", "IMDB Code"}
+            new String[]{"ID", "Hash", "Title", "DT", "Category", "Size", "IMDB Tag"}
     ) {
     @Override
     public boolean isCellEditable(int row, int column) {
