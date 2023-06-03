@@ -94,9 +94,10 @@ public RarHunt() {
         // Perform the search and update the table accordingly
         String searchName = nameField.getText();
         String selectedCategory = (String) categoryComboBox.getSelectedItem();
+        String searchImdb = nameField.getText();
 
         String modifiedSearchName = searchName.replaceAll(" ", ".");
-        query(modifiedSearchName, selectedCategory);
+        query(modifiedSearchName, selectedCategory, searchImdb);
     });
 
     // Set frame properties
@@ -114,11 +115,15 @@ public RarHunt() {
     categoryComboBox.setSelectedItem("All");
 }
 
-public void query(String title, String category) {
+public void query(String title, String category, String imdb) {
     try {
         String query = "SELECT * FROM items WHERE title LIKE '%" + title + "%'";
         if (!category.equals("All")) {
             query += " AND cat = '" + category + "'";
+        }
+        if (!imdb.isEmpty()) {
+            title = "*";
+            query += " OR imdb = '" + imdb + "'";
         }
 
         ResultSet info = con.leer(query);
@@ -133,12 +138,10 @@ public void query(String title, String category) {
             String hash = info.getString("hash");
             String dt = info.getString("dt");
             String cat = info.getString("cat");
+            String movieImdb = info.getString("imdb");
 
-            String imdb = info.getString("imdb");
-
-            Object[] rowData = {id, hash, titleFull, dt, cat, size, imdb};
+            Object[] rowData = {id, hash, titleFull, dt, cat, size, movieImdb};
             tableModel.addRow(rowData);
-
         }
 
         resultTable.addMouseListener(new MouseAdapter() {

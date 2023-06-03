@@ -22,7 +22,7 @@ private ResultSet rst;
 private Statement sentencia;
 
 private static final String driver = "org.sqlite.JDBC";
-private static final String url = "jdbc:sqlite:rarbg_db.sqlite";
+private static final String url = "jdbc:sqlite:S://WAMP//www//phpLiteAdmin//rarbg_db.sqlite";
 
 /**
  * Class constructor accessible from elsewhere.
