@@ -69,7 +69,7 @@ public void closeConnection() throws SQLException {
 /**
  * Reads existing records off of database table.
  *
- * @param sql SQL statement to be used.
+ * @param sql SQL statement to be used.le 
  * @return Output for the provided SQL statement after processing by the server.
  * @throws SQLException If SQL server encounters an error with provided
  * statement.

@@ -177,9 +177,9 @@ private void launchQBittorrent(String torrentHash) {
     try {
         String qbittorrentPath = "C:\\Program Files\\qBittorrent\\qbittorrent.exe";
         String command = qbittorrentPath + " " + torrentHash;
-        Process process = Runtime.getRuntime().exec(command);
-        process.waitFor();
-    } catch (IOException | InterruptedException ex) {
+        ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
+        processBuilder.start();
+    } catch (IOException ex) {
     }
 }
 
