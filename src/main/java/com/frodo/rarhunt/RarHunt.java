@@ -141,8 +141,8 @@ public void query(String title, String category, String imdb) {
             String dt = info.getString("dt");
             String cat = info.getString("cat");
             String movieImdb = info.getString("imdb");
-
-            Object[] rowData = {id, hash, titleFull, dt, cat, size, movieImdb};
+            double gigs  = Math.ceil(size / (1024 * 1024 * 1024));
+            Object[] rowData = {id, hash, titleFull, dt, cat, gigs, movieImdb};
             tableModel.addRow(rowData);
         }
 
