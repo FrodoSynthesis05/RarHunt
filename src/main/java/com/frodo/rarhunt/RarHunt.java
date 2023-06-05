@@ -11,6 +11,8 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -26,7 +28,7 @@ private JButton searchButton;
 private final JTable resultTable;
 private JComboBox<String> categoryComboBox;
 
-private final Connect con; // Assuming Connect class exists
+private final Connect con;
 private final DefaultTableModel tableModel;
 
 public RarHunt() {
@@ -154,6 +156,18 @@ public void query(String title, String category, String imdb) {
             }
         }
         });
+
+        // Display a popup message if no results are found after 7 seconds
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+        @Override
+        public void run() {
+            if (tableModel.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(RarHunt.this, "No matching results found.", "No Results", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+        }, 7000);
+
     } catch (SQLException ex) {
         Logger.getLogger(RarHunt.class.getName()).log(Level.SEVERE, null, ex);
     }
