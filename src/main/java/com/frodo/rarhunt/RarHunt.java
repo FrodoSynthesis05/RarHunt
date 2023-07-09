@@ -25,6 +25,7 @@ public class RarHunt extends JFrame {
 private JLabel nameLabel;
 private JTextField nameField;
 private JButton searchButton;
+private JButton processButton;
 private final JTable resultTable;
 private JComboBox<String> categoryComboBox;
 
@@ -38,6 +39,7 @@ public RarHunt() {
     nameLabel = new JLabel("Name:");
     nameField = new JTextField(20);
     searchButton = new JButton("Search");
+    processButton = new JButton("Sort");
 
     // Set up the layout with padding
     setLayout(new GridBagLayout());
@@ -56,16 +58,15 @@ public RarHunt() {
     gbc.gridx++;
     add(searchButton, gbc);
 
-    // Create a JLabel for the category ComboBox
-    JLabel categoryLabel = new JLabel("Category:");
-    gbc.gridx++;
-    //add(categoryLabel, gbc);
-
     // Create a JComboBox for categories
     String[] categories = {"All", "ebooks", "games_pc_iso", "games_pc_rip", "games_ps3", "games_ps4", "games_xbox360", "movies", "movies_bd_full", "movies_bd_remux", "movies_x264", "movies_x264_3d", "movies_x264_4k", "movies_x264_720", "movies_x265", "movies_x265_4k", "movies_x265_4k_hdr", "movies_xvid", "movies_xvid_720", "music_flac", "music_mp3", "software_pc_iso", "tv", "tv_sd", "tv_uhd", "xxx"};
     categoryComboBox = new JComboBox<>(categories);
     gbc.gridx++;
     add(categoryComboBox, gbc);
+
+    // Add the processButton
+    gbc.gridx++;
+    add(processButton, gbc);
 
     // Create a table model with labeled columns
     tableModel = new DefaultTableModel(
@@ -102,6 +103,12 @@ public RarHunt() {
         query(modifiedSearchName, selectedCategory, searchImdb);
     });
 
+    // Set up the event listener for the process button
+    processButton.addActionListener((ActionEvent e) -> {
+        String selectedCategory = (String) categoryComboBox.getSelectedItem();
+        processResultsByCategory(selectedCategory);
+    });
+
     // Set frame properties
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setSize(1500, 850);
@@ -115,6 +122,16 @@ public RarHunt() {
 
     // Set the "All" option as the default selection
     categoryComboBox.setSelectedItem("All");
+
+    nameField.addActionListener((ActionEvent e) -> {
+        // Perform the search and update the table accordingly
+        String searchName = nameField.getText();
+        String selectedCategory = (String) categoryComboBox.getSelectedItem();
+        String searchImdb = nameField.getText();
+
+        String modifiedSearchName = searchName.replaceAll(" ", ".");
+        query(modifiedSearchName, selectedCategory, searchImdb);
+    });
 }
 
 public void query(String title, String category, String imdb) {
@@ -141,7 +158,7 @@ public void query(String title, String category, String imdb) {
             String dt = info.getString("dt");
             String cat = info.getString("cat");
             String movieImdb = info.getString("imdb");
-            double gigs  = Math.ceil(size / (1024 * 1024 * 1024));
+            double gigs = Math.ceil(size / (1024 * 1024 * 1024));
             Object[] rowData = {id, hash, titleFull, dt, cat, gigs, movieImdb};
             tableModel.addRow(rowData);
         }
@@ -171,6 +188,39 @@ public void query(String title, String category, String imdb) {
     } catch (SQLException ex) {
         Logger.getLogger(RarHunt.class.getName()).log(Level.SEVERE, null, ex);
     }
+}
+
+private void processResultsByCategory(String selectedCategory) {
+    // Create a temporary table model to hold the filtered results
+    DefaultTableModel filteredTableModel = new DefaultTableModel(
+            new Object[][]{},
+            new String[]{"ID", "Hash", "Title", "DT", "Category", "Size", "IMDB Tag"}
+    ) {
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        return false; // Make all cells non-editable
+    }
+    };
+
+    for (int i = 0; i < tableModel.getRowCount(); i++) {
+        String category = (String) tableModel.getValueAt(i, 4); // Assuming the category is at column index 4
+        if (category.equals(selectedCategory) || selectedCategory.equals("All")) {
+            // Add the row to the filtered table model
+            Object[] rowData = {
+                tableModel.getValueAt(i, 0), // ID
+                tableModel.getValueAt(i, 1), // Hash
+                tableModel.getValueAt(i, 2), // Title
+                tableModel.getValueAt(i, 3), // DT
+                tableModel.getValueAt(i, 4), // Category
+                tableModel.getValueAt(i, 5), // Size
+                tableModel.getValueAt(i, 6) // IMDB Tag
+            };
+            filteredTableModel.addRow(rowData);
+        }
+    }
+
+    // Set the filtered table model as the new table model
+    resultTable.setModel(filteredTableModel);
 }
 
 private void launchQBittorrent(String torrentHash) {
